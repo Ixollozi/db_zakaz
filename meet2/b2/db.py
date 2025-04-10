@@ -2,17 +2,20 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 
 name = 'postgres'
-password = '909144002SAm'
+password = ''
 host = 'localhost'
 port = 5432
 db_name = 'postgres'
 # подключение к БД
 SQLALCHEMY_DATABASE_URL = f"postgresql://{name}:{password}@{host}:{port}/{db_name}"
-
+# создание движка
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# создание сессии
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# создание базового класса
 Base = declarative_base()
 
+# создание контекстного менеджера
 def get_db():
     db = SessionLocal()
     try:
@@ -94,7 +97,7 @@ class FactSales(Base):
     sale_dollars = Column(Float, nullable=False)
     volume_sold_liters = Column(Float, nullable=False)
     volume_sold_gallons = Column(Float, nullable=False)
-
+    # Добавлены связи
     date = relationship('DateTime')
     store = relationship('Store')
     item = relationship('Item')
